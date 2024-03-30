@@ -27,18 +27,23 @@
 
         <button onclick="
         score.wins = 0;
-        score.ties = 0;
         score.losses = 0;
+        score.ties = 0;
+        localStorage.removeItem('score');
         alert(`Wins: ${score.wins}, Ties: ${score.ties}, Losses ${score.losses}`);
         ">
             Reset Score
         </button>
 
         <script>
-            const score = {
-                wins: 0,
-                ties: 0,
-                losses: 0
+            let score = localStorage.getItem('score');
+
+            if (!score || typeof score !== 'object'){
+                 score = {
+                    wins: 0,
+                    ties: 0,
+                    losses: 0
+                };
             }
 
             alert("Welcome to my simple Rock-Paper-Scissors Game\nHave fun");
@@ -109,6 +114,8 @@
                     score.losses += 1;
                 }
 
+                localStorage.setItem('score', JSON.stringify(score));
+                
                 alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}.
  Wins: ${score.wins}, Ties: ${score.ties}, Losses ${score.losses}`);
             }
